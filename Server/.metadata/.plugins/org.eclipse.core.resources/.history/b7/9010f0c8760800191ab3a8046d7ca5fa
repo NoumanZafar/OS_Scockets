@@ -1,0 +1,33 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public class UpdateBug {
+	private boolean exit = true;
+	private int option;
+
+	public UpdateBug() {
+		super();
+	}
+
+	public void update(ObjectOutputStream out, ObjectInputStream in)
+			throws NumberFormatException, ClassNotFoundException, IOException {
+		do {
+			sendMessage(
+					"Select one of the following options.\n\t1. Update Status \n\t2. Append to Description\n\t3. Change assigned Engineer",
+					out);
+			option = Integer.parseInt((String) in.readObject());
+		} while (exit);
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

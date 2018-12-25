@@ -1,0 +1,8 @@
+package gmit.ie;
+
+public class AddBug {
+
+	public AddBug() {
+		super();
+	}
+}

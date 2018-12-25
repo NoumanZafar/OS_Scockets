@@ -1,0 +1,12 @@
+package gmit.ie;
+
+public class Options {
+	
+	public Options() {
+		super();
+	}
+	
+	public void selectOption() {
+		
+	}
+}

@@ -1,0 +1,29 @@
+package gmit.ie;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Read {
+	private Scanner read;
+	public void readFile(String fileName, Employee employee) {
+		try {
+			read=new Scanner(new File(fileName));
+			
+			while(read.hasNext()) {
+				String name=read.next();
+				String id=read.next();
+				String email=read.next();
+				String dep=read.next();
+				
+				System.out.printf("%s %s %s %s\n",name,id,email,dep);
+			}
+			read.close();
+		}catch(FileNotFoundException e) {
+			System.out.println("Error -------> File Does not EXIST.");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

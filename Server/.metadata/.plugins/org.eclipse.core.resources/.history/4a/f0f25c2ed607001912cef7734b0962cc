@@ -1,0 +1,8 @@
+package gmit.ie;
+
+public class Login {
+	
+	public Login() {
+		super();
+	}
+}

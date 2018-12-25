@@ -1,0 +1,64 @@
+package gmit.ie;
+
+import java.io.*;
+import java.util.Scanner;
+
+public class EmployeeRegistration {
+	private boolean exit = true;
+	private boolean exitID = true;
+	private boolean existEmail = true;
+	private Scanner console;
+
+	public EmployeeRegistration() {
+		super();
+		console = new Scanner(System.in);
+	}
+
+	public void registration(ObjectInputStream in, ObjectOutputStream out, String message)
+			throws ClassNotFoundException, IOException {
+		do {
+			receiveAndSendMessage(in, out, message);
+
+			do {
+				receiveAndSendMessage(in, out, message);
+				Boolean bool = Boolean.valueOf((String) in.readObject());
+				if (!(bool)) {
+					exitID = false;
+				} else {
+					System.out.println("Error ------> ID Already Exists. Try Again.");
+				}
+			} while (exitID);
+
+			/*do {*/
+				receiveAndSendMessage(in, out, message);
+				/*Boolean boo = Boolean.valueOf((String) in.readObject());
+				if (!(boo)) {
+					existEmail = false;
+				} else {
+					System.out.println("Error ------> Email Already Exists. Try Again.");
+				}
+			} while (existEmail);*/
+
+			receiveAndSendMessage(in, out, message);
+
+			this.exit = false;
+		} while (exit);
+	}
+
+	public void receiveAndSendMessage(ObjectInputStream in, ObjectOutputStream out, String message)
+			throws ClassNotFoundException, IOException {
+		message = (String) in.readObject();
+		System.out.println(message);
+		message = console.nextLine();
+		sendMessage(message, out);
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

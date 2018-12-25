@@ -1,0 +1,75 @@
+package gmit.ie;
+
+import java.io.*;
+import java.net.Socket;
+
+public class Server implements Runnable {
+	private Socket conn;
+	private int clientID;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
+	private int option;
+	private boolean exit = true;
+	private EmployeeRegistration empReg;
+	private Employee employee;
+	private boolean loggedIn=false;
+
+	public Server(int clientID, Socket conn) {
+		super();
+		empReg=new EmployeeRegistration();
+		this.clientID = clientID;
+		this.conn = conn;
+	}
+
+	public void run() {
+		try {
+			out = new ObjectOutputStream(conn.getOutputStream());
+			out.flush();
+			in = new ObjectInputStream(conn.getInputStream());
+			System.out.println("Client ID -------> " + clientID);
+
+			// Server Logic
+			do {
+				sendMessage("Enter one of the Following.\n\t1. Login\n\t2. Register\n\t3. Exit");
+				option = Integer.parseInt((String) in.readObject());
+				if (option == 1) {
+					System.out.println("Login section");
+					loggedIn=new Login().login("employees.txt", employee, out, in);
+					if(loggedIn) {
+						System.out.println("LogIn Success");
+						new Options().selectOption(in, out);
+					}
+				} else if (option == 2) {
+					System.out.println("Registration section");
+					empReg.registration(employee, in, out,"employees.txt");
+				} else if (option == 3) {
+					exit = false;
+					System.out.println("Client with ID -----> "+clientID+" left.");
+				} else {
+					System.out.println("WRONG INPUT ------> TRY AGAIN.");
+				}
+			} while (exit);
+
+		} catch (IOException | NumberFormatException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				out.close();
+				in.close();
+				conn.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void sendMessage(String message) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Server Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

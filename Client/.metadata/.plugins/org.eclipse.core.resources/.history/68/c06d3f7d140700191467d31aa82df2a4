@@ -1,0 +1,17 @@
+package gmit.ie;
+
+import java.io.ObjectInputStream;
+import java.util.*;
+
+public class EmployeeDetails {
+	private List<Object> list;
+	
+	public EmployeeDetails() {
+		super();
+		list=new ArrayList<>();
+	}
+	
+	public void getEmployees(ObjectInputStream in) {
+		
+	}
+}

@@ -1,0 +1,92 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.*;
+
+public class Client {
+	private Socket conn;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
+	private String message;
+	private String ipAddress;
+	private int portNumber;
+	private Scanner console;
+	private boolean exit = true;
+	private int option;
+	private EmployeeRegistration empReg;
+
+	public Client() {
+		super();
+		console = new Scanner(System.in);
+		empReg = new EmployeeRegistration();
+	}
+
+	public void connection() {
+		System.out.println("Enter the IP Address of the Server.");
+		ipAddress = console.next();
+
+		System.out.println("Enter the TCP Port Number.");
+		portNumber = console.nextInt();
+
+		try {
+			conn = new Socket(ipAddress, portNumber);
+			out = new ObjectOutputStream(conn.getOutputStream());
+			out.flush();
+			in = new ObjectInputStream(conn.getInputStream());
+
+			// Client logic
+			do {
+				message = (String) in.readObject();
+				System.out.println(message);
+				message = console.next();
+				sendMessage(message);
+				option = Integer.parseInt(message);
+				if (option == 1) {
+					System.out.println("Login section");
+				} else if (option == 2) {
+					System.out.println("Registration section");
+					empReg.registration(in, out, message, console);
+				} else if (option == 3) {
+					exit = false;
+					System.out.println("Connection Ended.");
+				} else {
+					System.out.println("WRONG INPUT ------> TRY AGAIN.");
+				}
+			} while (exit);
+		} catch (IOException | NumberFormatException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				out.close();
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void sendMessage(String message) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Client Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void recieveAndSendMessage(String message, Scanner console, ObjectInputStream in) {
+		try {
+			message = (String) in.readObject();
+			System.out.println(message);
+			message = console.next();
+			sendMessage(message);
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

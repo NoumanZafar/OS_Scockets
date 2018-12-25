@@ -1,0 +1,62 @@
+package gmit.ie;
+
+public class Bug {
+	private String ID;
+	private String dateAndTime;
+	private String platform;
+	private String problemDesc;
+	private String status;
+	
+	public Bug() {
+		super();
+	}
+
+	public Bug(String iD, String dateAndTime, String platform, String problemDesc, String status) {
+		super();
+		ID = iD;
+		this.dateAndTime = dateAndTime;
+		this.platform = platform;
+		this.problemDesc = problemDesc;
+		this.status = status;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
+	public String getDateAndTime() {
+		return dateAndTime;
+	}
+
+	public void setDateAndTime(String dateAndTime) {
+		this.dateAndTime = dateAndTime;
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
+
+	public String getProblemDesc() {
+		return problemDesc;
+	}
+
+	public void setProblemDesc(String problemDesc) {
+		this.problemDesc = problemDesc;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+}

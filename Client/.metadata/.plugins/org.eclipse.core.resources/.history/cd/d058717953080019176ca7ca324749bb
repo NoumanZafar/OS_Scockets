@@ -1,0 +1,54 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Scanner;
+
+public class Options {
+	private Scanner console;
+	private int option;
+	private boolean exit=true;
+
+	public Options() {
+		super();
+		console = new Scanner(System.in);
+	}
+
+	public void selectOption(ObjectInputStream in, ObjectOutputStream out, String message)
+			throws ClassNotFoundException, IOException {
+		do {
+			message = (String) in.readObject();
+			System.out.println(message);
+			message = console.next();
+			sendMessage(message, out);
+			option = Integer.parseInt(message);
+			if (option == 1) {
+				new EmployeeDetails().getEmployees(in);
+			} else if (option == 2) {
+				new AddBug().addBug(in, out, message);
+			} else if (option == 3) {
+				System.out.println("Assign a bug");
+			} else if (option == 4) {
+				System.out.println("All bugs (Not Assigned)");
+			} else if (option == 5) {
+				System.out.println("All bugs");
+			} else if (option == 6) {
+				System.out.println("Update a bug");
+			} else if (option == 7) {
+				this.exit=false;
+			}else {
+				System.out.println("WRONG INPUT ------> TRY AGAIN.");
+			}
+		} while (exit);
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

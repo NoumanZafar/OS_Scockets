@@ -1,0 +1,16 @@
+package gmit.ie;
+
+public class AddBug {
+	private boolean exit = true;
+
+	public AddBug() {
+		super();
+	}
+
+	public void addBug() {
+		do {
+
+			this.exit = false;
+		} while (exit);
+	}
+}

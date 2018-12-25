@@ -1,0 +1,24 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+public class EmployeeDetails {
+
+	public EmployeeDetails() {
+		super();
+	}
+
+	public void getEmployees(ObjectInputStream in) throws NumberFormatException, ClassNotFoundException, IOException {
+		int size = Integer.parseInt((String) in.readObject());
+
+		for (int i = 0; i < size; i++) {
+			String name = (String) in.readObject();
+			String id = (String) in.readObject();
+			String email = (String) in.readObject();
+			String dep = (String) in.readObject();
+			System.out.println(
+					"Employee [Name=" + name + ", ID=" + id + ", Email=" + email + ", Department=" + dep + "]");
+		}
+	}
+}

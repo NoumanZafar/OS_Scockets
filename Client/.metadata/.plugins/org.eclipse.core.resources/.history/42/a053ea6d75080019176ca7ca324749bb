@@ -1,0 +1,8 @@
+package gmit.ie;
+
+public class UpdateBug {
+	
+	public UpdateBug() {
+		super();
+	}
+}

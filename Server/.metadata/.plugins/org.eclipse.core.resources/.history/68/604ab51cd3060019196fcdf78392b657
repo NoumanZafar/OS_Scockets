@@ -1,0 +1,28 @@
+package gmit.ie;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Read {
+	public void readFile(String fileName, Employee employee) {
+		/*
+		 * ObjectInputStream read = new ObjectInputStream(new
+		 * FileInputStream(fileName)); employee = (Employee) read.readObject();
+		 * System.out.println(employee); read.close();
+		 */
+
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(new File(fileName)));
+			String sCurrentLine;
+
+			while ((sCurrentLine = reader.readLine()) != null) {
+				System.out.println(sCurrentLine);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

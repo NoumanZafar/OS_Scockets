@@ -1,0 +1,24 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+public class Options {
+	
+	public Options() {
+		super();
+	}
+	
+	public void selectOption() {
+		
+	}
+	
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,15 @@
+package gmit.ie;
+
+public class UpdateBug {
+	private boolean exit=true;
+	
+	public UpdateBug() {
+		super();
+	}
+	
+	public void update() {
+		do {
+			
+		}while(exit);
+	}
+}

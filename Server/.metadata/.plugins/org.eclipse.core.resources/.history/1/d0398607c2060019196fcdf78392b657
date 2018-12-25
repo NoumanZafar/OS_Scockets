@@ -1,0 +1,28 @@
+package gmit.ie;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Write {
+
+	public void fileWriter(String fileName, Employee employee){
+		BufferedWriter writer=null;
+		try {
+			writer=new BufferedWriter(new FileWriter(new File(fileName), true));
+			writer.write(employee.toString());
+		}catch(FileNotFoundException e) {
+			System.out.println("Error ------> File Not Found.");
+		}catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

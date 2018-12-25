@@ -1,0 +1,62 @@
+package gmit.ie;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Read {
+	public void readFile(String fileName, Employee employee) {
+		try {
+			FileInputStream fs= new FileInputStream(fileName);
+			DataInputStream in=new DataInputStream(fs);
+			BufferedReader br =new BufferedReader(new InputStreamReader(in));
+			
+			String line;
+			while(br.read() != 0) {
+				System.out.println(br.readLine());
+				System.out.println(br.readLine());
+				System.out.println(br.readLine());
+				System.out.println(br.readLine());
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+	
+	
+/*	private List<Employee> list;
+	private Scanner s;
+	
+	public void readFile(String fileName, Employee employee) {
+		list = new ArrayList<Employee>();
+		try {
+		    s= new Scanner(new File(fileName));
+			while(s.hasNext()) {
+				employee=new Employee();
+				System.out.println(s.next());
+				System.out.println(s.next());
+				System.out.println(s.next());
+				System.out.println(s.next());
+				employee.setName(s.next());
+				employee.setEmployeeID(s.next());
+				employee.setEmail(s.next());
+				employee.setDepartment(s.next());
+				list.add(employee);
+				
+				System.out.println(employee);
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+}*/
+/*
+ * ObjectInputStream read = new ObjectInputStream(new
+ * FileInputStream(fileName)); employee = (Employee) read.readObject();
+ * System.out.println(employee); read.close();
+ */

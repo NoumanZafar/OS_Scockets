@@ -1,0 +1,7 @@
+package gmit.ie;
+
+public class BugAssignment {
+	public BugAssignment() {
+		super();
+	}
+}

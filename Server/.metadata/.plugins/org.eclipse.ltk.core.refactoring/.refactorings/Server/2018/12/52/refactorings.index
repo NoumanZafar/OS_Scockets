@@ -1,0 +1,7 @@
+1545611053548	Rename type 'Read'
+1545611069719	Rename type 'Write'
+1545746054762	Rename type 'WriteEmployees'
+1545746123450	Rename type 'ReadEmployees'
+1545746198936	Rename method 'fileWriter'
+1545746235864	Rename method 'readFile'
+1545761040202	Rename type 'ViewAllBugs'

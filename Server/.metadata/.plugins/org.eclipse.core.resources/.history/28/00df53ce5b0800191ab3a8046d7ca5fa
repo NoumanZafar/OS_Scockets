@@ -1,0 +1,34 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.*;
+
+public class BugAssignment {
+	private List<Employee> eList;
+	private List<Bug> bugList;
+	private ReadFile reader;
+
+	public BugAssignment() {
+		super();
+		eList = new ArrayList<Employee>();
+		bugList = new ArrayList<Bug>();
+		reader = new ReadFile();
+	}
+
+	public void assignToEngineer(String fileName, Employee employee, String bugFile, Bug bug, ObjectOutputStream out) {
+		eList = reader.readEmployees(fileName, employee);
+		bugList = reader.readBugs(bugFile, bug);
+
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Server Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,28 @@
+package gmit.ie;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Formatter;
+
+public class WriteFile {
+	private Formatter formatter;
+	private FileWriter fileWriter;
+
+	public void writeEmployees(String fileName, Employee employee) {
+		try {
+			fileWriter = new FileWriter(fileName, true);
+			formatter = new Formatter(fileWriter);
+			formatter.format("%s \n %s \n %s \n %s \n", employee.getName(), employee.getEmployeeID(),
+					employee.getEmail(), employee.getDepartment());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			formatter.close();
+			try {
+				fileWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

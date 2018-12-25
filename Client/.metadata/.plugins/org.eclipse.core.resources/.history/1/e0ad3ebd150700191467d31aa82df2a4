@@ -1,0 +1,17 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.*;
+
+public class EmployeeDetails {
+
+	public EmployeeDetails() {
+		super();
+	}
+
+	public void getEmployees(ObjectInputStream in) throws NumberFormatException, ClassNotFoundException, IOException {
+		int size = Integer.parseInt((String) in.readObject());
+		System.out.println(size);
+	}
+}

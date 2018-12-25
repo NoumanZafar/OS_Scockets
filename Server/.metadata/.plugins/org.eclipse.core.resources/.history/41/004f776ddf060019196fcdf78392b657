@@ -1,0 +1,67 @@
+package gmit.ie;
+
+import java.io.FileWriter;
+import java.util.Formatter;
+
+public class Write {
+
+	/*
+	 * public void fileWriter(String fileName, Employee employee) throws
+	 * FileNotFoundException, IOException { ObjectOutputStream writer = new
+	 * ObjectOutputStream(new FileOutputStream(fileName,true));
+	 * writer.writeObject(employee); writer.close(); }
+	 */
+
+	/*public void fileWriter(String fileName, Employee employee) {
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter(new File(fileName), true));
+			writer.write(employee.getName());
+			writer.write(employee.getEmployeeID());
+			writer.write(employee.getEmail());
+			writer.write(employee.getDepartment());
+		} catch (FileNotFoundException e) {
+			System.out.println("Error ------> File Not Found.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}*/
+	
+	private Formatter formatter;
+	private FileWriter fileWriter;
+	
+	public void fileWriter(String fileName, Employee employee) {
+		try {
+			fileWriter =new FileWriter(fileName,true);
+			formatter=new Formatter(fileWriter);
+			formatter.format("%s %s %s %s %n", employee.getName(),employee.getEmployeeID(),employee.getEmail(),employee.getDepartment());
+			formatter.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	/*public void fileWriter(String fileName, Employee employee) {
+		try {
+			FileWriter fw=new FileWriter(fileName,true);
+			PrintWriter out=new PrintWriter(fw);
+			
+			out.println(employee.getName());
+			out.println(employee.getEmployeeID());
+			out.println(employee.getEmail());
+			out.println(employee.getDepartment());
+			out.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}*/
+}

@@ -1,0 +1,12 @@
+package gmit.ie;
+
+public class EmployeeDetails {
+	
+	public EmployeeDetails() {
+		super();
+	}
+	
+	public void getEmployees() {
+		
+	}
+}

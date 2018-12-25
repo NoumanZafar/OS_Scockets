@@ -1,0 +1,37 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Login {
+	private ReadEmployees emp;
+	private List<Employee> list;
+
+	public Login() {
+		super();
+		emp = new ReadEmployees();
+		list = new ArrayList<Employee>();
+	}
+
+	public void login(String fileName, Employee employee) {
+		list = emp.readFile(fileName, employee);
+		for (Employee e : list) {
+
+		}
+	}
+
+}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Server Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

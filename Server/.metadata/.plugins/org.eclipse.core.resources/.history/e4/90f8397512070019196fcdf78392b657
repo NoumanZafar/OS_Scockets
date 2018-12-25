@@ -1,0 +1,14 @@
+package gmit.ie;
+
+public class EmployeeDetails {
+	private WriteEmployees emp;
+	
+	public EmployeeDetails() {
+		super();
+		emp=new WriteEmployees();
+	}
+	
+	public void getEmployees() {
+		
+	}
+}

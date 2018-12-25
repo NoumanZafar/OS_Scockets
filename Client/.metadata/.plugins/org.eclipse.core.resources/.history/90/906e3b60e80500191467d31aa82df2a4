@@ -1,0 +1,91 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.*;
+
+public class Client {
+	private Socket conn;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
+	private String message;
+	private String ipAddress;
+	private int portNumber;
+	private Scanner console;
+	private boolean exit = true;
+	private int option;
+
+	public Client() {
+		super();
+		console = new Scanner(System.in);
+	}
+
+	public void connection() {
+		System.out.println("Enter the IP Address of the Server.");
+		ipAddress = console.next();
+
+		System.out.println("Enter the TCP Port Number.");
+		portNumber = console.nextInt();
+
+		try {
+			conn = new Socket(ipAddress, portNumber);
+			out = new ObjectOutputStream(conn.getOutputStream());
+			out.flush();
+			in = new ObjectInputStream(conn.getInputStream());
+
+			// Client logic
+			do {
+				recieveAndSendMessage(message,console,in);
+				System.out.println("method"+message);
+				option = Integer.parseInt(message);
+				if (option == 1) {
+					System.out.println("Login section");
+				} else if (option == 2) {
+					System.out.println("Registration section");
+				} else if (option == 3) {
+					exit = false;
+				} else {
+					System.out.println("Wrong Input");
+				}				
+			} while (exit);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				out.close();
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void sendMessage(String message) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Client Message ----> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void recieveAndSendMessage(String message, Scanner console, ObjectInputStream in) {
+		try {
+			message = (String) in.readObject();
+			System.out.println(message);
+			message = console.next();
+			sendMessage(message);
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

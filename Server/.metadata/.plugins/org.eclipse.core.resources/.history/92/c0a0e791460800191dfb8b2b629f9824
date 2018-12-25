@@ -1,0 +1,40 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Random;
+
+public class AddBug {
+	private boolean exit = true;
+
+	public AddBug() {
+		super();
+	}
+
+	public void addBug(ObjectOutputStream out,ObjectInputStream in) {
+		do {
+			String z="000000";
+			Random rand=new Random();
+			String id=Integer.toString(rand.nextInt(0X1000000),16);
+			id=z.substring(id.length())+id;
+			System.out.println(id);
+			
+			sendMessage("Bug Name : ",out);
+			String name = (String) in.readObject();
+			System.out.println(name);
+
+			this.exit = false;
+		} while (exit);
+	}
+	
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Server Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

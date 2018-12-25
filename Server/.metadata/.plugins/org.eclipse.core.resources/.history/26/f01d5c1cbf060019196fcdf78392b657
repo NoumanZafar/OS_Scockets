@@ -1,0 +1,49 @@
+package gmit.ie;
+
+import java.io.*;
+
+public class EmployeeRegistration {
+	private boolean exit = true;
+	private Write writer;
+
+	public EmployeeRegistration() {
+		super();
+		writer =new Write();
+	}
+
+	public void registration(Employee employee, ObjectInputStream in, ObjectOutputStream out)
+			throws ClassNotFoundException, IOException {
+		do {
+			
+			sendMessage("Employee Name : ", out);
+			String name=(String) in.readObject();
+			System.out.println(name);
+			
+			sendMessage("Employee ID : ", out);
+			String id=(String) in.readObject();
+			System.out.println(id);
+			
+			sendMessage("Employee Email : ", out);
+			String email=(String) in.readObject();
+			System.out.println(email);
+			
+			sendMessage("Employee Department : ", out);
+			String dep=(String) in.readObject();
+			System.out.println(dep);
+			
+			employee=new Employee(name, id, email, dep);
+
+			this.exit = false;
+		} while (exit);
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Server Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

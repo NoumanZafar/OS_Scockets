@@ -1,0 +1,48 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ViewAllBugs {
+	private ReadFile reader;
+	private List<Bug> bugList;
+	
+	public ViewAllBugs() {
+		super();
+		reader=new ReadFile();
+		bugList=new ArrayList<Bug>();
+	}
+	
+	public void getAllBugs(String bugFile,Bug bug,ObjectInputStream in,ObjectOutputStream out) throws IOException {
+		bugList=reader.readBugs(bugFile, bug);
+		String message = Integer.toString(bugList.size());
+		out.writeObject(message);
+		out.flush(); 
+		
+		for(Bug b : bugList) {
+			sendMessage(b.getId(),out);
+
+			sendMessage(b.getName(),out);
+
+			sendMessage(b.getDateAndTime(),out);
+			
+			sendMessage(b.getPlatform(),out);
+
+			sendMessage(b.getProblemDesc(),out);
+	
+			sendMessage(b.getStatus(),out);
+		}
+	}
+	
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

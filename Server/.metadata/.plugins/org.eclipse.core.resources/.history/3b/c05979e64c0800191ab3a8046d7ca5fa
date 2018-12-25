@@ -1,0 +1,68 @@
+package gmit.ie;
+
+import java.io.*;
+
+public class EmployeeRegistration {
+	private boolean exit = true;
+	private WriteFile writer;
+	private String id;
+	private String email;
+
+	public EmployeeRegistration() {
+		super();
+		writer = new WriteFile();
+	}
+
+	public void registration(Employee employee, ObjectInputStream in, ObjectOutputStream out, String fileName)
+			throws ClassNotFoundException, IOException {
+		do {
+
+			sendMessage("Employee Name : ", out);
+			String name = (String) in.readObject();
+			System.out.println(name);
+
+			for (int i = 0; i < 1; i++) {
+				sendMessage("Employee ID : ", out);
+				id = (String) in.readObject();
+				System.out.println(id);
+				boolean found = new EmployeeDetails().findDuplicateID(fileName, employee, id);
+				out.writeBoolean(found);
+				out.flush();
+				if(found) {
+					i--;
+				}
+			}
+			
+			for (int i = 0; i < 1; i++) {
+				sendMessage("Employee Email : ", out);
+				email = (String) in.readObject();
+				System.out.println(email);
+				boolean found = new EmployeeDetails().findDuplicateEmail(fileName, employee, email);
+				out.writeBoolean(found);
+				out.flush();
+				if(found) {
+					i--;
+				}
+			}
+
+			sendMessage("Employee Department : ", out);
+			String dep = (String) in.readObject();
+			System.out.println(dep);
+
+			employee = new Employee(name, id, email, dep);
+			writer.fileWriter(fileName, employee);
+
+			this.exit = false;
+		} while (exit);
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Server Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

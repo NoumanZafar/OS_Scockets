@@ -1,0 +1,27 @@
+package gmit.ie;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
+
+public class ReadEmployees {
+	private Scanner read;
+	private List<Employee> list;
+
+	public List<Employee> readFile(String fileName, Employee employee) {
+		list=new ArrayList<Employee>();
+		try {
+			read = new Scanner(new File(fileName));
+			while (read.hasNext()) {
+				employee = new Employee(read.next(), read.next(), read.next(), read.next());
+				list.add(employee);
+			}
+			read.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error -------> File Does not EXIST.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+}

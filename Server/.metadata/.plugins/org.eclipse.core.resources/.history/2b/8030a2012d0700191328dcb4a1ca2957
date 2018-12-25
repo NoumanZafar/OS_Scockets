@@ -1,0 +1,57 @@
+package gmit.ie;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class EmployeeDetails {
+	private ReadEmployees emp;
+	private List<Employee> list;
+
+	public EmployeeDetails() {
+		super();
+		emp = new ReadEmployees();
+		list = new ArrayList<Employee>();
+	}
+
+	public void getEmployees(String fileName, Employee employee, ObjectOutputStream out) throws IOException {
+		list = emp.readFile(fileName, employee);
+		String message = Integer.toString(list.size());
+		out.writeObject(message);
+		out.flush();
+		for(Employee e : list) {
+			out.writeObject(e.getName());
+			out.flush();
+			
+			out.writeObject(e.getEmployeeID());
+			out.flush();
+			
+			out.writeObject(e.getEmail());
+			out.flush();
+			
+			out.writeObject(e.getDepartment());
+			out.flush();
+		}
+	}
+	
+	public boolean findDuplicateEmail(String email) {
+		for(Employee e : list) {
+			if(e.getEmail().equalsIgnoreCase(email)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean findDuplicateID(String fileName,Employee employee,String id) {
+		list = emp.readFile(fileName, employee);
+		for(Employee e : list) {
+			String eID=e.getEmployeeID();
+			if(eID.equalsIgnoreCase(id)) {
+				System.out.println("found");
+				return true;
+			}
+		}
+		return false;
+	}
+}
