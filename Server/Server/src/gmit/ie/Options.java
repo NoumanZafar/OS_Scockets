@@ -44,7 +44,7 @@ public class Options {
 				viewBugs.getAllBugs(bugFile, bug, in, out);
 			} else if (option == 6) {
 				System.out.println("Update a bug");
-				updateBug.update(out, in, bugFile, bug);
+				updateBug.update(out, in, bugFile, bug,fileName,employee);
 			} else if (option == 7) {
 				this.exit = false;
 			} else {

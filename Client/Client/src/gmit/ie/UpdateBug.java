@@ -18,32 +18,66 @@ public class UpdateBug {
 	public void update(ObjectInputStream in, ObjectOutputStream out, String message)
 			throws ClassNotFoundException, IOException {
 		do {
-			for (int i = 0; i < 1; i++) {
-				receiveAndSendMessage(in, out, message);
-				boolean found = in.readBoolean();
-				if (found) {
-					message = (String) in.readObject();
-					System.out.println(message);
-					message = console.nextLine();
-					sendMessage(message, out);
-					option = Integer.parseInt(message);
-					if (option == 1) {
-						System.out.println("Update Status");
-					} else if (option == 2) {
-						System.out.println("Append to description");
-					} else if (option == 3) {
-						System.out.println("Change Assigned Engineer");
-					} else if (option == 4) {
-						this.exit = false;
-					} else {
-						System.out.println("Error -------> Wrong Input. Try Again.");
-					}
-				} else if (found == false) {
-					System.out.println("There is no bug of this ID.");
-					i--;
-				}
+			message = (String) in.readObject();
+			System.out.println(message);
+			message = console.nextLine();
+			sendMessage(message, out);
+			option = Integer.parseInt(message);
+			if (option == 1) {
+				updateStatus(in,out,message);
+			} else if (option == 2) {
+				appendDesc(in, out, message);
+			} else if (option == 3) {
+				System.out.println("Change Assigned Engineer");
+				new BugAssignment().assignToEngineer(in, out, message);
+			} else if (option == 4) {
+				this.exit = false;
+			} else {
+				System.out.println("Error -------> Wrong Input. Try Again.");
 			}
 		} while (exit);
+	}
+
+	public void appendDesc(ObjectInputStream in, ObjectOutputStream out, String message)
+			throws ClassNotFoundException, IOException {
+		receiveAndSendMessage(in, out, message);
+		for (int i = 0; i < 1; i++) {
+			receiveAndSendMessage(in, out, message);
+			boolean found = in.readBoolean();
+			if (found == false) {
+				System.out.println("There is no bug of this ID. Try again");
+				i--;
+			}
+		}
+	}
+
+	public void updateStatus(ObjectInputStream in, ObjectOutputStream out, String message)
+			throws ClassNotFoundException, IOException {
+		System.out.println("Update Status");
+		for (int i = 0; i < 1; i++) {
+			message = (String) in.readObject();
+			System.out.println(message);
+			message = console.nextLine();
+			sendMessage(message, out);
+			int selection = Integer.parseInt(message);
+			if (selection == 2) {
+				new BugAssignment().assignToEngineer(in, out, message);
+			} else if (!(selection == 1 || selection == 2 || selection == 3)) {
+				System.out.println("Error -------> Wrong Input. Try again.");
+				i--;
+			}
+
+			if (selection == 1 || selection == 3) {
+				for (int j = 0; j < 1; j++) {
+					receiveAndSendMessage(in, out, message);
+					boolean found = in.readBoolean();
+					if (found == false) {
+						System.out.println("There is no bug of this ID. Try again");
+						j--;
+					}
+				}
+			}
+		}
 	}
 
 	public void receiveAndSendMessage(ObjectInputStream in, ObjectOutputStream out, String message)
