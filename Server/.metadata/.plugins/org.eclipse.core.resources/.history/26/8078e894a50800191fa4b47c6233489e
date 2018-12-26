@@ -25,17 +25,17 @@ public class ViewBugs {
 		out.flush();
 
 		for (Bug b : bugList) {
-			sendMessage(b.getId().trim(), out);
+			sendMessage(b.getId(), out);
 
-			sendMessage(b.getName().trim(), out);
+			sendMessage(b.getName(), out);
 
-			sendMessage(b.getDateAndTime().trim(), out);
+			sendMessage(b.getDateAndTime(), out);
 
-			sendMessage(b.getPlatform().trim(), out);
+			sendMessage(b.getPlatform(), out);
 
-			sendMessage(b.getProblemDesc().trim(), out);
+			sendMessage(b.getProblemDesc(), out);
 
-			sendMessage(b.getStatus().trim(), out);
+			sendMessage(b.getStatus(), out);
 		}
 	}
 
@@ -53,17 +53,17 @@ public class ViewBugs {
 		out.flush();
 		if (list.size() > 0) {
 			for (Bug b : list) {
-				sendMessage(b.getId().trim(), out);
+				sendMessage(b.getId(), out);
 
-				sendMessage(b.getName().trim(), out);
+				sendMessage(b.getName(), out);
 
-				sendMessage(b.getDateAndTime().trim(), out);
+				sendMessage(b.getDateAndTime(), out);
 
-				sendMessage(b.getPlatform().trim(), out);
+				sendMessage(b.getPlatform(), out);
 
-				sendMessage(b.getProblemDesc().trim(), out);
+				sendMessage(b.getProblemDesc(), out);
 
-				sendMessage(b.getStatus().trim(), out);
+				sendMessage(b.getStatus(), out);
 			}
 		} else {
 			System.out.println("There is no bug available.");

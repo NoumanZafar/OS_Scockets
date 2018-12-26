@@ -22,9 +22,15 @@
 <fullyQualifiedTypeName name="java.io.FileWriter"/>
 <fullyQualifiedTypeName name="gmit.ie.Employee"/>
 <fullyQualifiedTypeName name="gmit.ie.WriteEmployees"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="gmit.ie.EmployeeDetails"/>
 <fullyQualifiedTypeName name="gmit.ie.Login"/>
 <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
 <fullyQualifiedTypeName name="gmit.ie.Options"/>
+<fullyQualifiedTypeName name="gmit.ie.Bug"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="gmit.ie.EmployeeDetails"/>
+<fullyQualifiedTypeName name="gmit.ie.AddBug"/>
+<fullyQualifiedTypeName name="gmit.ie.BugAssignment"/>
+<fullyQualifiedTypeName name="gmit.ie.ViewAllBugs"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="gmit.ie.ReadFile"/>
 </qualifiedTypeNameHistroy>

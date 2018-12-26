@@ -6,6 +6,7 @@
 <fullyQualifiedTypeName name="gmit.ie.EmployeeRegistration"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="gmit.ie.EmployeeDetails"/>
-<fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="gmit.ie.Options"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="gmit.ie.UpdateBug"/>
 </qualifiedTypeNameHistroy>

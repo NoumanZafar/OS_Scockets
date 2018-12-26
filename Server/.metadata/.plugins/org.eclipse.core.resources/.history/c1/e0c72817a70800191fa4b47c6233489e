@@ -13,7 +13,7 @@ public class WriteFile {
 		try {
 			fileWriter = new FileWriter(fileName, true);
 			formatter = new Formatter(fileWriter);
-			formatter.format("%s\n%s\n%s\n%s\n", employee.getName(), employee.getEmployeeID(),
+			formatter.format("%s \n %s \n %s \n %s \n", employee.getName(), employee.getEmployeeID(),
 					employee.getEmail(), employee.getDepartment());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,7 +32,7 @@ public class WriteFile {
 			fileWriter = new FileWriter(bugFile, append);
 			formatter = new Formatter(fileWriter);
 			for (Bug bug : list) {
-				formatter.format("%s\n%s\n%s\n%s\n%s\n%s\n", bug.getId(), bug.getName(),
+				formatter.format("%s \n %s \n %s \n %s \n %s \n %s \n", bug.getId(), bug.getName(),
 						bug.getDateAndTime(), bug.getPlatform(), bug.getProblemDesc(), bug.getStatus());
 			}
 		} catch (Exception e) {

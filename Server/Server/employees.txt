@@ -1,24 +1,8 @@
-1 
- 1 
- 1 
- 1 
-1 
- 2 
- 2 
- 2 
-2 
- 3 
- 3 
- 2 
-2 
- 4 
- 4 
- 4 
-nouman zafar 
- G00353137 
- no email 
- dep 
-z 
- z 
- z 
- z 
+nouman
+g00353137
+email
+department
+test
+test
+test
+test

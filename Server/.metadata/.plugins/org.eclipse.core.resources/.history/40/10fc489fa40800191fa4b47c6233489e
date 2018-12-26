@@ -106,7 +106,7 @@ public class UpdateBug {
 				index++;
 				if (bId.equalsIgnoreCase(bugID)) {
 					this.found = true;
-					b.setProblemDesc(b.getProblemDesc().trim()+" "+ desc);
+					b.setProblemDesc(b.getProblemDesc() + desc);
 					bugList.set(index, b);
 					break;
 				}

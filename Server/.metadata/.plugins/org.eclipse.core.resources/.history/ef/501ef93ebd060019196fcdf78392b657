@@ -1,7 +1,0 @@
-package gmit.ie;
-
-public class Write {
-	public void writer(String fileName, String text) throws Exception {
-		Write writer
-	}
-}

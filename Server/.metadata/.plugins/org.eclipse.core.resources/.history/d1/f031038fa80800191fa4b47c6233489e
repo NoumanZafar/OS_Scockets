@@ -20,7 +20,7 @@ public class UpdateBug {
 		reader = new ReadFile();
 	}
 
-	public void update(ObjectOutputStream out, ObjectInputStream in, String bugFile, Bug bug, String fileName,
+	public synchronized void update(ObjectOutputStream out, ObjectInputStream in, String bugFile, Bug bug, String fileName,
 			Employee employee) throws NumberFormatException, ClassNotFoundException, IOException {
 		do {
 			sendMessage(
