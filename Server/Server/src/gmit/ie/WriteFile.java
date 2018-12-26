@@ -11,6 +11,7 @@ public class WriteFile {
 
 	public void writeEmployees(String fileName, Employee employee) {
 		try {
+			//comment added for test.
 			fileWriter = new FileWriter(fileName, true);
 			formatter = new Formatter(fileWriter);
 			formatter.format("%s\n%s\n%s\n%s\n", employee.getName(), employee.getEmployeeID(),
