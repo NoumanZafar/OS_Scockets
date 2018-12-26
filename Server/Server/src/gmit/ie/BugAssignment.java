@@ -7,14 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BugAssignment {
+	/**
+	 * Lists and variables to store bug and engineer's data.
+	 */
 	private List<Employee> eList;
 	private List<Bug> bugList;
 	private ReadFile reader;
 	private boolean eFound = false;
 	private boolean bFound = false;
 	private String id;
-	private int index=-1;
+	private int index = -1;
 
+	/**
+	 * Constructor Instantiate the Lists and other classes.
+	 */
 	public BugAssignment() {
 		super();
 		eList = new ArrayList<Employee>();
@@ -22,11 +28,33 @@ public class BugAssignment {
 		reader = new ReadFile();
 	}
 
-	public void assignToEngineer(String fileName, Employee employee, String bugFile, Bug bug, ObjectOutputStream out,
-			ObjectInputStream in) throws ClassNotFoundException, IOException {
+	/**
+	 * Assign a bug to an engineer. Only one thread/ client will deal with this
+	 * method.
+	 * 
+	 * @param fileName Text file where engineer's data is stored.
+	 * @param employee Engineer class
+	 * @param bugFile  Text file where bug's data is stored.
+	 * @param bug      Bug
+	 * @param out      ObjectOutputStream
+	 * @param in       ObjectInputStream
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public synchronized void assignToEngineer(String fileName, Employee employee, String bugFile, Bug bug,
+			ObjectOutputStream out, ObjectInputStream in) throws ClassNotFoundException, IOException {
+
+		/**
+		 * Get the Engineers and all the bugs from text files and save them in the
+		 * lists.
+		 */
 		eList = reader.readEmployees(fileName, employee);
 		bugList = reader.readBugs(bugFile, bug);
 
+		/**
+		 * To see whether does exists in the list or not. If not ask the user again to
+		 * enter the ID of Engineer.
+		 */
 		for (int i = 0; i < 1; i++) {
 			sendMessage("Enter Engineer ID : ", out);
 			String eID = (String) in.readObject();
@@ -49,6 +77,10 @@ public class BugAssignment {
 			}
 		}
 
+		/**
+		 * Check if the bug id is valid. If yes then assign an engineer otherwise ask
+		 * the user to enter the ID again.
+		 */
 		for (int j = 0; j < 1; j++) {
 			sendMessage("Enter Bug ID : ", out);
 			String bugID = (String) in.readObject();

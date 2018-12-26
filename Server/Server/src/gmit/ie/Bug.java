@@ -1,17 +1,31 @@
 package gmit.ie;
 
 public class Bug {
+
+	/**
+	 * Bug Attributes
+	 */
 	private String id;
 	private String name;
 	private String dateAndTime;
 	private String platform;
 	private String problemDesc;
 	private String status;
-	
+
 	public Bug() {
 		super();
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param id
+	 * @param name
+	 * @param dateAndTime
+	 * @param platform
+	 * @param problemDesc
+	 * @param status
+	 */
 	public Bug(String id, String name, String dateAndTime, String platform, String problemDesc, String status) {
 		super();
 		this.id = id;
@@ -22,6 +36,9 @@ public class Bug {
 		this.status = status;
 	}
 
+	/**
+	 * Getters and setters.
+	 */
 	public String getId() {
 		return id;
 	}

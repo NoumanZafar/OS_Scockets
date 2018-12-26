@@ -1,0 +1,100 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ViewBugs {
+	/**
+	 * Read the bugs from the file and store them in the list and then send them
+	 * over to the client.
+	 */
+	private ReadFile reader;
+	private List<Bug> bugList;
+	private List<Bug> list;
+
+	/**
+	 * Instantiate the objects.
+	 */
+	public ViewBugs() {
+		super();
+		reader = new ReadFile();
+		bugList = new ArrayList<Bug>();
+		list = new ArrayList<Bug>();
+	}
+
+	/**
+	 * View all the bugs which are saved in the file..
+	 * 
+	 * @param bugFile
+	 * @param bug
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
+	public void getAllBugs(String bugFile, Bug bug, ObjectInputStream in, ObjectOutputStream out) throws IOException {
+		/**
+		 * read the bugs from file and assign them to a list.
+		 */
+		bugList = reader.readBugs(bugFile, bug);
+		String message = Integer.toString(bugList.size());
+		out.writeObject(message);
+		out.flush();
+
+		for (Bug b : bugList) {
+			sendMessage(b.getId().trim(), out);
+
+			sendMessage(b.getName().trim(), out);
+
+			sendMessage(b.getDateAndTime().trim(), out);
+
+			sendMessage(b.getPlatform().trim(), out);
+
+			sendMessage(b.getProblemDesc().trim(), out);
+
+			sendMessage(b.getStatus().trim(), out);
+		}
+	}
+
+	public void getBugsNotAssigned(String bugFile, Bug bug, ObjectInputStream in, ObjectOutputStream out)
+			throws IOException {
+		bugList = reader.readBugs(bugFile, bug);
+		for (Bug b : bugList) {
+			if (!(b.getStatus().trim().contains("Assigned"))) {
+				list.add(b);
+			}
+		}
+
+		String message = Integer.toString(list.size());
+		out.writeObject(message);
+		out.flush();
+		if (list.size() > 0) {
+			for (Bug b : list) {
+				sendMessage(b.getId().trim(), out);
+
+				sendMessage(b.getName().trim(), out);
+
+				sendMessage(b.getDateAndTime().trim(), out);
+
+				sendMessage(b.getPlatform().trim(), out);
+
+				sendMessage(b.getProblemDesc().trim(), out);
+
+				sendMessage(b.getStatus().trim(), out);
+			}
+		} else {
+			System.out.println("There is no bug available.");
+		}
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

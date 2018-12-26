@@ -1,0 +1,138 @@
+package gmit.ie;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class AddBug {
+	/**
+	 * variables and Composition with other classes.
+	 */
+	private boolean exit = true;
+	private int option;
+	private String status;
+	private WriteFile writer;
+	private ReadFile reader;
+	private List<Bug> bugList;
+
+	/**
+	 * Instantiate the other classes
+	 */
+	public AddBug() {
+		super();
+		writer = new WriteFile();
+		reader = new ReadFile();
+	}
+
+	/**
+	 * This method is synchronized that means only one thread can reach it. In this
+	 * method a new bug is being added and written to the file.
+	 * 
+	 * @param out ObjectOutputStream
+	 * @param in
+	 * @param employee
+	 * @param fileName
+	 * @param bug
+	 * @param bugFile
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public synchronized void addBug(ObjectOutputStream out, ObjectInputStream in, Employee employee, String fileName,
+			Bug bug, String bugFile) throws ClassNotFoundException, IOException {
+		do {
+			String id = generateID(bugFile, bug);
+
+			sendMessage("Bug Name : ", out);
+			String name = (String) in.readObject();
+			System.out.println(name);
+
+			sendMessage("Time and Date : ", out);
+			String time = (String) in.readObject();
+			System.out.println(time);
+
+			sendMessage("Platform-OS : ", out);
+			String platform = (String) in.readObject();
+			System.out.println(platform);
+
+			sendMessage("Problem Description : ", out);
+			String problemDesc = (String) in.readObject();
+			System.out.println(problemDesc);
+
+			for (int i = 0; i < 1; i++) {
+				sendMessage("Choose one of the following Status\n\t1. Open\n\t2. Assigned\n\t3. Closed", out);
+				String s = (String) in.readObject();
+				System.out.println(s);
+				option = Integer.parseInt(s);
+				if (option == 1) {
+					status = "Open";
+					System.out.println(status);
+				} else if (option == 2) {
+					for (int j = 0; j < 1; j++) {
+						sendMessage("Enter the Engineer's ID : ", out);
+						String engineerID = (String) in.readObject();
+						boolean found = new EmployeeDetails().findDuplicateID(fileName, employee, engineerID);
+						out.writeBoolean(found);
+						out.flush();
+						if (found) {
+							status = "Assigned [ Engineer's ID : " + engineerID + " ]";
+							System.out.println(status);
+						} else {
+							System.out.println("No Engineer Exists of ID : " + engineerID + ". Try Again");
+							j--;
+						}
+					}
+				} else if (option == 3) {
+					status = "Closed";
+					System.out.println(status);
+				} else {
+					System.out.println("Wrong input. Try Again.");
+					i--;
+				}
+			}
+
+			bug = new Bug(id, name, time, platform, problemDesc, status);
+			bugList = new ArrayList<Bug>();
+			bugList.add(bug);
+
+			this.exit = false;
+		} while (exit);
+		writer.writeBug(bugFile, true, bugList);
+	}
+
+	public String generateID(String bugFile, Bug bug) {
+		boolean found = false;
+		String id = null;
+		bugList = reader.readBugs(bugFile, bug);
+		for (int i = 0; i < 1; i++) {
+			String z = "000000";
+			Random rand = new Random();
+			id = Integer.toString(rand.nextInt(0X1000000), 16);
+			id = z.substring(id.length()) + id;
+			System.out.println(id);
+			for (Bug b : bugList) {
+				String bID = b.getId().trim();
+				if (bID.equalsIgnoreCase(id)) {
+					found = true;
+					break;
+				}
+			}
+			if (found) {
+				i--;
+			}
+		}
+		return id;
+	}
+
+	public void sendMessage(String message, ObjectOutputStream out) {
+		try {
+			out.writeObject(message);
+			out.flush();
+			System.out.println("Server Message -------> " + message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

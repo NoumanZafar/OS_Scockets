@@ -1,6 +1,10 @@
 package gmit.ie;
 
-public class Employee{
+public class Employee {
+
+	/**
+	 * Employee /Engineer /User attributes.
+	 */
 	private String name;
 	private String employeeID;
 	private String email;
@@ -10,6 +14,14 @@ public class Employee{
 		super();
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param name
+	 * @param employeeID
+	 * @param email
+	 * @param department
+	 */
 	public Employee(String name, String employeeID, String email, String department) {
 		super();
 		this.name = name;
@@ -18,6 +30,9 @@ public class Employee{
 		this.department = department;
 	}
 
+	/**
+	 * Getters and Setters for the attributes.
+	 */
 	public String getName() {
 		return name;
 	}

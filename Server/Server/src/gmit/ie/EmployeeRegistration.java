@@ -3,24 +3,47 @@ package gmit.ie;
 import java.io.*;
 
 public class EmployeeRegistration {
+	/**
+	 * Attributes
+	 */
 	private boolean exit = true;
 	private WriteFile writer;
 	private String id;
 	private String email;
 
+	/**
+	 * Instantiate the writer class where the objects are written in the file
+	 */
 	public EmployeeRegistration() {
 		super();
 		writer = new WriteFile();
 	}
 
+	/**
+	 * Take the users details and save them in an object and then that object is
+	 * written to the file.
+	 * 
+	 * @param employee
+	 * @param in
+	 * @param out
+	 * @param fileName
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public void registration(Employee employee, ObjectInputStream in, ObjectOutputStream out, String fileName)
 			throws ClassNotFoundException, IOException {
 		do {
 
+			/**
+			 * Name of the user
+			 */
 			sendMessage("Employee Name : ", out);
 			String name = (String) in.readObject();
 			System.out.println(name);
 
+			/**
+			 * Id has to be unique.
+			 */
 			for (int i = 0; i < 1; i++) {
 				sendMessage("Employee ID : ", out);
 				id = (String) in.readObject();
@@ -28,11 +51,14 @@ public class EmployeeRegistration {
 				boolean found = new EmployeeDetails().findDuplicateID(fileName, employee, id);
 				out.writeBoolean(found);
 				out.flush();
-				if(found) {
+				if (found) {
 					i--;
 				}
 			}
-			
+
+			/**
+			 * Checks whether email is unique or not if not ask user to input again.
+			 */
 			for (int i = 0; i < 1; i++) {
 				sendMessage("Employee Email : ", out);
 				email = (String) in.readObject();
@@ -40,15 +66,21 @@ public class EmployeeRegistration {
 				boolean found = new EmployeeDetails().findDuplicateEmail(fileName, employee, email);
 				out.writeBoolean(found);
 				out.flush();
-				if(found) {
+				if (found) {
 					i--;
 				}
 			}
 
+			/**
+			 * Department attribute.
+			 */
 			sendMessage("Employee Department : ", out);
 			String dep = (String) in.readObject();
 			System.out.println(dep);
 
+			/**
+			 * Create an object and write that object to the file.
+			 */
 			employee = new Employee(name, id, email, dep);
 			writer.writeEmployees(fileName, employee);
 

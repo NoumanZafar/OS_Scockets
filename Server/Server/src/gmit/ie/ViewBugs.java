@@ -7,10 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewBugs {
+	/**
+	 * Read the bugs from the file and store them in the list and then send them
+	 * over to the client.
+	 */
 	private ReadFile reader;
 	private List<Bug> bugList;
 	private List<Bug> list;
 
+	/**
+	 * Instantiate the objects.
+	 */
 	public ViewBugs() {
 		super();
 		reader = new ReadFile();
@@ -18,12 +25,28 @@ public class ViewBugs {
 		list = new ArrayList<Bug>();
 	}
 
+	/**
+	 * View all the bugs which are saved in the file..
+	 * 
+	 * @param bugFile
+	 * @param bug
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	public void getAllBugs(String bugFile, Bug bug, ObjectInputStream in, ObjectOutputStream out) throws IOException {
+		/**
+		 * read the bugs from file and assign them to a list.and send the size of the
+		 * list to the client.
+		 */
 		bugList = reader.readBugs(bugFile, bug);
 		String message = Integer.toString(bugList.size());
 		out.writeObject(message);
 		out.flush();
 
+		/**
+		 * Loop over each object and send the details of each attribute to the client.
+		 */
 		for (Bug b : bugList) {
 			sendMessage(b.getId().trim(), out);
 
@@ -39,8 +62,20 @@ public class ViewBugs {
 		}
 	}
 
+	/**
+	 * View the bugs with are not assign to any Engineer.
+	 * 
+	 * @param bugFile
+	 * @param bug
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	public void getBugsNotAssigned(String bugFile, Bug bug, ObjectInputStream in, ObjectOutputStream out)
 			throws IOException {
+		/**
+		 * Filter the bugs which are not assigned on the bases of there Status.
+		 */
 		bugList = reader.readBugs(bugFile, bug);
 		for (Bug b : bugList) {
 			if (!(b.getStatus().trim().contains("Assigned"))) {
@@ -48,6 +83,9 @@ public class ViewBugs {
 			}
 		}
 
+		/**
+		 * Loop over all the bugs and send the attributes data to the client.
+		 */
 		String message = Integer.toString(list.size());
 		out.writeObject(message);
 		out.flush();
