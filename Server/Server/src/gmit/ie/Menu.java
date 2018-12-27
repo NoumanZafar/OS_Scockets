@@ -45,9 +45,10 @@ public class Menu {
 	public void selectOption(ObjectInputStream in, ObjectOutputStream out, String fileName, Employee employee, Bug bug,
 			String bugFile) throws NumberFormatException, ClassNotFoundException, IOException {
 		do {
-			sendMessage(
-					"Select one of the following options.\n\t1. All Employees\n\t2. Add a bug\n\t3. Assign a bug\n\t4. View All bugs (Not Assigned to Developer)\n\t5. View All bugs\n\t6. Update a bug\n\t7. Exit",
-					out);
+			String msg = "Select one of the following options.\n\t1. All Employees\n\t2. Add a bug\n\t3. Assign a bug\n\t4. View All bugs (Not Assigned to Developer)\n\t5. View All bugs\n\t6. Update a bug\n\t7. Exit";
+			out.writeObject(msg);
+			out.flush();
+			System.out.println("Server Message -------> " + msg);
 			option = Integer.parseInt((String) in.readObject());
 			if (option == 1) {
 				empDetails.getEmployees(fileName, employee, out);
@@ -71,15 +72,5 @@ public class Menu {
 				System.out.println("WRONG INPUT ------> TRY AGAIN.");
 			}
 		} while (exit);
-	}
-
-	public void sendMessage(String message, ObjectOutputStream out) {
-		try {
-			out.writeObject(message);
-			out.flush();
-			System.out.println("Server Message -------> " + message);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }

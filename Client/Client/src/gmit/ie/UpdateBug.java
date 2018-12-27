@@ -15,6 +15,16 @@ public class UpdateBug {
 		console = new Scanner(System.in);
 	}
 
+	/**
+	 * Provide the new details to update the existing bug. and provide options to
+	 * the user e.g change the status or change the assigned Engineer.
+	 * 
+	 * @param in
+	 * @param out
+	 * @param message
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public void update(ObjectInputStream in, ObjectOutputStream out, String message)
 			throws ClassNotFoundException, IOException {
 		do {
@@ -24,7 +34,7 @@ public class UpdateBug {
 			sendMessage(message, out);
 			option = Integer.parseInt(message);
 			if (option == 1) {
-				updateStatus(in,out,message);
+				updateStatus(in, out, message);
 			} else if (option == 2) {
 				appendDesc(in, out, message);
 			} else if (option == 3) {
@@ -38,6 +48,16 @@ public class UpdateBug {
 		} while (exit);
 	}
 
+	/**
+	 * Append to the existing description of the bug. If provided Bug id is not
+	 * valid then provide again.
+	 * 
+	 * @param in
+	 * @param out
+	 * @param message
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public void appendDesc(ObjectInputStream in, ObjectOutputStream out, String message)
 			throws ClassNotFoundException, IOException {
 		receiveAndSendMessage(in, out, message);
@@ -51,6 +71,10 @@ public class UpdateBug {
 		}
 	}
 
+	/**
+	 * Update the status of the existing bug. either set to open, close or assigned
+	 * if status is set to assigned then provide the engineers id along with it.
+	 */
 	public void updateStatus(ObjectInputStream in, ObjectOutputStream out, String message)
 			throws ClassNotFoundException, IOException {
 		System.out.println("Update Status");
@@ -80,6 +104,9 @@ public class UpdateBug {
 		}
 	}
 
+	/**
+	 * Send and receive messages to/from server.
+	 */
 	public void receiveAndSendMessage(ObjectInputStream in, ObjectOutputStream out, String message)
 			throws ClassNotFoundException, IOException {
 		message = (String) in.readObject();

@@ -103,6 +103,7 @@ public class ViewBugs {
 
 				sendMessage(b.getStatus().trim(), out);
 			}
+			list.clear();
 		} else {
 			System.out.println("There is no bug available.");
 		}

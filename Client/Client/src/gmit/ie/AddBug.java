@@ -6,26 +6,58 @@ import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class AddBug {
+	/**
+	 * Variables for controlling the different parts.
+	 */
 	private boolean exit = true;
 	private Scanner console;
 	private int option;
 
+	/**
+	 * Constructor Instantiate the Scanner.
+	 */
 	public AddBug() {
 		super();
 		console = new Scanner(System.in);
 	}
 
+	/**
+	 * Add bug method receive and send the message to/from server side application.
+	 * 
+	 * @param in      ObjectInputStream
+	 * @param out     ObjectOutputStream
+	 * @param message Whatever client sends to Server
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public void addBug(ObjectInputStream in, ObjectOutputStream out, String message)
 			throws ClassNotFoundException, IOException {
 		do {
+			/**
+			 * Bug name
+			 */
 			receiveAndSendMessage(in, out, message);
 
+			/**
+			 * Time and Date stamp
+			 */
 			receiveAndSendMessage(in, out, message);
 
+			/**
+			 * Platform
+			 */
 			receiveAndSendMessage(in, out, message);
 
+			/**
+			 * Description
+			 */
 			receiveAndSendMessage(in, out, message);
 
+			/**
+			 * Bug status. If user wants to set the status to Assigned then ask for the
+			 * Engineer's ID. If user does not exists in the server side then keep asking
+			 * until the right engineer's id.
+			 */
 			for (int i = 0; i < 1; i++) {
 				message = (String) in.readObject();
 				System.out.println(message);
@@ -50,6 +82,15 @@ public class AddBug {
 		} while (exit);
 	}
 
+	/**
+	 * Receive and send the message.
+	 * 
+	 * @param in
+	 * @param out
+	 * @param message
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public void receiveAndSendMessage(ObjectInputStream in, ObjectOutputStream out, String message)
 			throws ClassNotFoundException, IOException {
 		message = (String) in.readObject();
